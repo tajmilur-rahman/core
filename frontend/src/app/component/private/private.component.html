@@ -1,0 +1,35 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+      SppotFixes Logo
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+        <div>
+            <mat-toolbar>
+                <button mat-icon-button class="toolbar-icon" aria-label="" (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span>Spotfixes</span>
+                <span class="toolbar-spacer"></span>
+                <button mat-icon-button class="toolbar-icon" aria-label="Help">
+                    <mat-icon>help</mat-icon>
+                </button>
+                <button mat-icon-button class="toolbar-icon" aria-label="Settings">
+                    <mat-icon>settings</mat-icon>
+                </button>
+                <button mat-icon-button class="toolbar-icon" aria-label="Menu">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <button mat-icon-button class="toolbar-icon" aria-label="Account" [matMenuTriggerFor]="beforeMenu">
+                    <mat-icon>account_circle</mat-icon>
+                </button>
+                <mat-menu #beforeMenu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="logout()">Log Out</button>
+                </mat-menu>
+            </mat-toolbar>
+        </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
