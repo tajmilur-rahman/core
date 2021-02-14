@@ -5,9 +5,9 @@ const environment = {
     },
     "database": {
         "client": "mysql",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "username": "root",
-        "password": "",
+        "password": "rupak@2020",
         "name": "spotfixes"
     }
 };

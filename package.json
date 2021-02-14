@@ -1,0 +1,26 @@
+{
+  "name": "spotfixes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "cd ./frontend & npm run start",
+    "backend": "cd ./backend & npm run start:dev",
+    "start": "concurrently \"npm run frontend\" \"npm run backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tajmilur-rahman/spotfixes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tajmilur-rahman/spotfixes/issues"
+  },
+  "homepage": "https://github.com/tajmilur-rahman/spotfixes#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "child_process": "^1.0.2",
+    "concurrently": "^5.3.0"
+  }
+}
