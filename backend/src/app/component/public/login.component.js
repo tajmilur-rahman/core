@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-const validateRequest = require('../../middleware/validate-request');
+const validateRequest = require('../../middleware/validate-request.middleware');
 const userService = require('../../service/user.service');
 
 module.exports = {

@@ -1,6 +1,6 @@
 const jwt = require('express-jwt');
 const { secret } = require('../../environments/environment');
-const userService = require('../../app/service/user.service');
+const userService = require('../service/user.service');
 
 module.exports = {
     canActivate

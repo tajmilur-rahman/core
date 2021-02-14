@@ -1,4 +1,4 @@
-const db = require('../helper/db');
+const knex = require('../database/knexfile').knex;
 
 module.exports = {
     getUserByUsername,
@@ -8,15 +8,15 @@ module.exports = {
 
 async function getUserById(id)
 {
-    return await db.select('*').from('users').where('id', id).limit(1);
+    return await knex.select('*').from('users').where('id', id).limit(1);
 }
 
 async function getUserByUsername(username)
 {
-    return await db.select('*').from('users').where('username', username).limit(1);
+    return await knex.select('*').from('users').where('username', username).limit(1);
 }
 
 async function getAllUsers()
 {
-    return await db.select('*').from('users');
+    return await knex.select('*').from('users');
 }
