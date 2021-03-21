@@ -9,13 +9,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
 
 
 @NgModule({
   declarations: [
     PublicComponent,
     LoginComponent,
+    SignupComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +31,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatStepperModule,
     SharedModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatCardModule,
@@ -34,6 +42,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ]
 })
 export class PublicModule { }
