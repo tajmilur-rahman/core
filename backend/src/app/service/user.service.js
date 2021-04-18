@@ -3,11 +3,14 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const crypto = require("crypto");
 const userDao = require('../dao/user.dao');
+const commonService = require('./common.service');
 
 module.exports = {
     authenticate,
     getUsers,
     getUserById,
+    createUser,
+    updateUser,
 };
 
 async function getUserById(id) {
@@ -20,8 +23,8 @@ async function getUserById(id) {
     return users[0];
 }
 
-async function getUsers() {
-    const users = await userDao.getAllUsers();
+async function getUsers(search = []) {
+    const users = await userDao.getAllUsers(search);
 
     if (!users || users.length <= 0) {
         throw 'No User Found';
@@ -69,6 +72,24 @@ function randomTokenString() {
 }
 
 function basicDetails(user) {
-    const { id, first_name, last_name, username, role_id } = user;
-    return { id, first_name, last_name, username, role_id };
+    const { id, name, username, role_id } = user;
+    return { id, name, username, role_id };
+}
+
+async function createUser(user) {
+    const data = {
+        status: 1
+    };
+    data['username'] = user.email;
+    data['password'] = bcrypt.hashSync(`${Math.random()}`);
+    data['name'] = user.name;
+    data['email'] = user.email;
+    data['role_id'] = user.role_id;
+    data['created_at'] = commonService.getCurrentDate();
+    return await userDao.createUser(data);
+}
+
+async function updateUser(data, where) {
+    data.updated_at = commonService.getCurrentDate();
+    return await userDao.updateUser(data, where);
 }

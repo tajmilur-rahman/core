@@ -14,6 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { SignupComponent } from './signup/signup.component';
     PublicComponent,
     LoginComponent,
     SignupComponent,
+    ResetPasswordComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     CommonModule,

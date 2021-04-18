@@ -35,4 +35,28 @@ export class AuthService {
 
     return false;
   }
+
+  createUser(formData: {
+    name: string;
+    email: string;
+    phone_number: string;
+    role_id: number;
+    company_name: string;
+  }): Observable<any> {
+    return this.http.post<any>(`/v1/auth/signup`, formData);
+  }
+
+  resetPassword(formData: {
+    new_password: string;
+    confirm_password: string;
+    password_verification_code: string;
+  }, id: number): Observable<any> {
+    return this.http.put<any>(`/v1/auth/reset-password/${+id}`, formData);
+  }
+
+  forgetPassword(formData: {
+    email: string;
+  }): Observable<any> {
+    return this.http.post<any>(`/v1/auth/forget-password`, formData);
+  }
 }

@@ -16,8 +16,17 @@
         </mat-form-field>
       </p>
 
-      <div class="button">
-        <button type="submit" [disabled]="!loginForm.valid" mat-button>Login</button>
+      <div class="flex space-between">
+        <div>
+          <a href="#" routerLink="/public/forget-password">Forget Password</a>
+        </div>
+        <div>
+          <button type="submit" [disabled]="!loginForm.valid" mat-button>Login</button>
+        </div>
+      </div>
+
+      <div>
+        <a href="#" routerLink="/public/signup">Create Account</a>
       </div>
     </form>
   </mat-card-content>
