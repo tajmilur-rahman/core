@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PrivateComponent } from './private.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { OrderFormComponent } from './order/order-form/order-form.component';
 import { AuthGuardMiddleware } from '../../middleware/auth-guard.middleware';
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
+      },
+      {
+        path: 'order/create',
+        component: OrderFormComponent
       },
       {
         path: '',

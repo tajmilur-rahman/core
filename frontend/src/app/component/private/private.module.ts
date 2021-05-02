@@ -14,11 +14,20 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+import { OrderFormComponent } from './order/order-form/order-form.component';
 
 @NgModule({
   declarations: [
     PrivateComponent,
     DashboardComponent,
+    OrderFormComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +43,12 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSidenavModule,
     MatMenuModule,
     SharedModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatCardModule,
@@ -45,6 +60,12 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatSidenavModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ]
 })
 export class PrivateModule { }
