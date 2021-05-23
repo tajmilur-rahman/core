@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { OrderService } from '../../../service/order.service';
 import { IOrder } from '../../../interface/IOrder';
 import {MatPaginator} from '@angular/material/paginator';
@@ -11,7 +11,7 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, AfterContentChecked {
   displayedColumns: string[] = ['id', 'title', 'customerName', 'location', 'schedule', 'technicianName'];
   filteredResults: Observable<IOrder[]>;
 
@@ -23,12 +23,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   loading = false;
   constructor(
     private orderService: OrderService,
+    private cdref: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {}
 
-  ngAfterViewInit() {
-    this.filteredResults = merge(this.sort.sortChange, this.paginator.page)
+  ngAfterContentChecked(): void {
+    this.cdref.detectChanges();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.filteredResults = merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -51,6 +57,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           return observableOf([]);
         })
       );
+    });
   }
 
   resetPaging(): void {

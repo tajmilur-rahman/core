@@ -1,6 +1,30 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-      SpotFixes Logo
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" fixedTopGap="56">
+        <div class="logo">
+            <img src="../../../app/assets/images/spotfixes_logo.png" alt="Spotfixes" />
+        </div>
+        <div class="menu-link-container">
+            <div class="menu-link">
+                <mat-icon aria-hidden="false" aria-label="Dashboard">dashboard</mat-icon>
+                <a class="link" routerLink="/private/dashboard">Dashboard</a>
+            </div>
+            <div class="menu-link">
+                <mat-icon aria-hidden="false" aria-label="Orders">list</mat-icon>
+                <a class="link" routerLink="/private/order/create">Orders</a>
+            </div>
+            <div class="menu-link">
+                <mat-icon aria-hidden="false" aria-label="Customers">account_circle</mat-icon>
+                <a class="link" routerLink="/private/customer">Customers</a>
+            </div>
+            <div class="menu-link">
+                <mat-icon aria-hidden="false" aria-label="Technicians">account_box</mat-icon>
+                <a class="link" routerLink="/private/technician">Technicians</a>
+            </div>
+            <div class="menu-link">
+                <mat-icon aria-hidden="false" aria-label="Users">supervisor_account</mat-icon>
+                <a class="link" routerLink="/private/user">Users</a>
+            </div>
+        </div>
     </mat-sidenav>
   
     <mat-sidenav-content>

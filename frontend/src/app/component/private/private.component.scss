@@ -9,3 +9,25 @@
     left: 0;
     right: 0;
 }
+
+mat-sidenav {
+    width: 20%;
+
+    .logo {
+        min-height: 64px;
+    }
+
+    .menu-link-container {
+        padding-left: 10px;
+
+        .menu-link {
+            height: 30px;
+            display: flex;
+            align-items : center;
+
+            .link {
+                margin-left: 3px;
+            }
+        }
+    }
+}
