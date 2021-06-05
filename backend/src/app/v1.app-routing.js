@@ -12,5 +12,6 @@ router.put('/auth/reset-password/:id', SignupComponent.resetPassword);
 router.post('/auth/forget-password', SignupComponent.forgetPassword);
 router.get('/users', canActivate(), UserComponent.getUsers);
 router.get('/orders', canActivate(), OrderComponent.getAll);
+router.post('/orders', canActivate(), OrderComponent.create);
 
 module.exports = router;

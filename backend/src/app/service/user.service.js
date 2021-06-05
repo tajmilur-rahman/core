@@ -53,8 +53,21 @@ async function authenticate({ username, password, ipAddress }) {
 }
 
 function generateJwtToken(user) {
-    // create a jwt token containing the user id that expires in 15 minutes
-    return jwt.sign({ sub: user.id, id: user.id }, config.secret, { expiresIn: '15m' });
+    let allowedFieldList = [
+        'id',
+        'name',
+        'email',
+        'status',
+        'role_id',
+        'customer_id',
+    ];
+    Object.keys(user).forEach(field => {
+        if (allowedFieldList.indexOf(field) === -1) {
+            delete user[field];
+        }
+    });
+    // create a jwt token containing the user id
+    return jwt.sign(JSON.stringify(user), config.secret);
 }
 
 function generateRefreshToken(user, ipAddress) {
