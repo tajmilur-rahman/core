@@ -1,0 +1,169 @@
+<mat-card>
+    <mat-card-title>Create order</mat-card-title>
+    <mat-card-content>
+      <app-loader [loading]="loading"></app-loader>
+  
+      <form [formGroup]="form" (submit)="submit()">
+        <!--<div class="flex space-between">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90" appearance="fill">
+                <mat-label>Customer</mat-label>
+                <mat-select formControlName="customer_id" required>
+                  <mat-option *ngFor="let customer of customerList" [value]="customer.id">{{ customer.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90" appearance="fill">
+                <mat-label>Technician</mat-label>
+                <mat-select formControlName="technician_id" required>
+                  <mat-option *ngFor="let technician of technicianList" [value]="technician.id">{{ technician.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2" appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status_id" required>
+                  <mat-option *ngFor="let status of statusList" [value]="status.id">{{ status.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>-->
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="text" matInput placeholder="Title" formControlName="title" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="text" matInput placeholder="Description" formControlName="description" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="text" matInput placeholder="Address" formControlName="address" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="text" matInput placeholder="City" formControlName="city" required>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="text" matInput placeholder="State" formControlName="state" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="text" matInput placeholder="Postal Code" formControlName="zip" required>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="text" matInput placeholder="Country" formControlName="country" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="date" matInput placeholder="Start Date" formControlName="start_date" required>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="time" matInput placeholder="Start Time" formControlName="start_time">
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="date" matInput placeholder="End Date" formControlName="end_date">
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-90">
+                <input type="time" matInput placeholder="End Time" formControlName="end_time">
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2" appearance="fill">
+                <mat-label>Pay type</mat-label>
+                <mat-select formControlName="pay_type_id" required>
+                  <mat-option *ngFor="let payType of payTypeList" [value]="payType.id">{{ payType.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Fixed Pay" formControlName="fixed_pay" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+  
+        <div class="button">
+          <button type="submit" [disabled]="!form.valid" mat-button>Create</button>
+        </div>
+      </form>
+    </mat-card-content>
+</mat-card> 

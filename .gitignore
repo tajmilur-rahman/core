@@ -1,13 +1,5 @@
 /backend/node_modules
-/backend/.gitignore
-/backend/LICENSE
 /backend/package-lock.json
 
-/frontend/dist
-/frontend/e2e
 /frontend/node_modules
-/frontend/.gitignore
 /frontend/package-lock.json
-node_modules
-package-lock.json
-app

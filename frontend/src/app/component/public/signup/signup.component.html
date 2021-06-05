@@ -1,0 +1,46 @@
+<mat-card>
+    <mat-card-title>Create an account</mat-card-title>
+    <mat-card-content>
+      <app-loader [loading]="loading"></app-loader>
+  
+      <form [formGroup]="signupForm" (submit)="submit()">
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Full Name" formControlName="name" required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Email" formControlName="email" required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Phone Number" formControlName="phone_number" required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose what you want</mat-label>
+            <mat-select formControlName="role_id" required>
+              <mat-option value="2">I need someone to work</mat-option>
+              <mat-option value="3">I am seeking for work</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Company Name" formControlName="company_name">
+          </mat-form-field>
+        </p>
+  
+        <div class="button">
+          <button type="submit" [disabled]="!signupForm.valid" mat-button>Create Account</button>
+        </div>
+      </form>
+    </mat-card-content>
+</mat-card>  
