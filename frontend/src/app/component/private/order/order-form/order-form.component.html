@@ -113,7 +113,7 @@
               <mat-form-field class="width-95-2" appearance="fill">
                 <mat-label>Timezone</mat-label>
                 <mat-select formControlName="timezone">
-                  <mat-option *ngFor="let timezone of getTimezoneList(form.get('country').value)" [value]="timezone">{{ timezone }}</mat-option>
+                  <mat-option *ngFor="let timezone of getTimezoneList(form.get('country')?.value)" [value]="timezone">{{ timezone }}</mat-option>
                 </mat-select>
               </mat-form-field>
             </p>
