@@ -9,12 +9,14 @@ import { AuthService } from '../../service/auth.service';
 })
 export class PrivateComponent implements OnInit {
   opened = false;
+  sessionUser: any = null;
   constructor(
     private router: Router,
     private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    this.sessionUser = this.authService.getSession();
   }
 
   logout(): void {

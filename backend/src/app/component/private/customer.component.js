@@ -7,7 +7,13 @@ module.exports = {
 
 function getAll(req, res, next)
 {
-    const search = req.query.search;
+    const { search } = req.query;
+    if (req.user.role_id === 2) {
+        search['id'] = {
+            condition: 'in',
+            value: [req.user.customer_id],
+        };
+    }
     customerService.getAll(search)
         .then(response => {
             res.json({

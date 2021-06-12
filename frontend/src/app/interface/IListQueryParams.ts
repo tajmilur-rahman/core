@@ -1,11 +1,11 @@
 export enum ISearchCondition {
-    'in',
-    'not in'
+    IN = 'in',
+    NOT_IN = 'not in',
 }
 
 export class ISearchParams {
     field: string;
-    condition: 'in' | 'not in';
+    condition: string;
     value: any[];
 }
 

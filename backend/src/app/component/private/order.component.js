@@ -8,8 +8,21 @@ module.exports = {
 
 async function getAll(req, res, next)
 {
-    const totalCountResult = await orderService.getAll([], true);
-    const result = await orderService.getAll([], false);
+    let {search, sort, offset} = req.query;
+
+    if (!search) {
+        search = {};
+    }
+
+    if (req.user.role_id === 2) {
+        search['customer_id'] = {
+            condition: 'in',
+            value: [req.user.customer_id],
+        };
+    }
+
+    const totalCountResult = await orderService.getAll(search, true);
+    const result = await orderService.getAll(search, false);
     res.json({
         totalCount: totalCountResult[0].totalCount,
         result: result,
@@ -40,6 +53,10 @@ async function create(req, res, next) {
     if (error) {
         next(`Validation error: ${error.details.map(x => x.message).join(', ')}`);
         return false;
+    }
+
+    if (req.user.role_id === 2) {
+        value.customer_id = req.user.customer_id;
     }
 
     value.created_by = req.user.id;

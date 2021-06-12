@@ -7,10 +7,11 @@ import { StatusService } from '../../../../service/status.service';
 import { OrderService } from '../../../../service/order.service';
 import { UserService } from '../../../../service/user.service';
 import { forkJoin } from 'rxjs';
-import { ICustomer } from 'src/app/interface/ICustomer';
-import { IStatus } from 'src/app/interface/IStatus';
-import { ITechnician } from 'src/app/interface/ITechnician';
-import { PAY_TYPE } from 'src/app/constant/Order';
+import { ICustomer } from '../../../../interface/ICustomer';
+import { IStatus } from '../../../../interface/IStatus';
+import { ITechnician } from '../../../../interface/ITechnician';
+import { PAY_TYPE } from '../../../../constant/Order';
+import { AuthService } from '../../../../service/auth.service';
 
 @Component({
   selector: 'app-order-form',
@@ -24,8 +25,9 @@ export class OrderFormComponent implements OnInit {
   statusList: IStatus[] = [];
   technicianList: ITechnician[] = [];
   payTypeList = PAY_TYPE;
+  sessionUser: any = null;
   form: FormGroup = new FormGroup({
-    customer_id: new FormControl('', [Validators.required]),
+    customer_id: new FormControl(0, [Validators.required]),
     technician_id: new FormControl(0),
     status_id: new FormControl(1, [Validators.required]),
     title: new FormControl('', [Validators.required]),
@@ -51,9 +53,11 @@ export class OrderFormComponent implements OnInit {
     private statusService: StatusService,
     private userService: UserService,
     private orderService: OrderService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    this.sessionUser = this.authService.getSession();
     this.route.queryParams.subscribe(params => {
       this.queryParams = params;
     });
@@ -83,6 +87,8 @@ export class OrderFormComponent implements OnInit {
       this.customerList = customerList.result;
       this.statusList = statusListList.result;
       this.technicianList = technicianList.result;
+
+      this.form.get('customer_id')?.setValue(this.sessionUser?.customer_id);
     }, error => {
       this.loading = false;
     }, () => {

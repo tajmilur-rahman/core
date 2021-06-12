@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,12 +22,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentCh
   @ViewChild(MatSort) sort: MatSort;
 
   loading = false;
+  sessionUser: any = null;
   constructor(
     private orderService: OrderService,
     private cdref: ChangeDetectorRef,
+    private authService: AuthService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sessionUser = this.authService.getSession();
+  }
 
   ngAfterContentChecked(): void {
     this.cdref.detectChanges();

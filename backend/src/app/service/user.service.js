@@ -85,8 +85,8 @@ function randomTokenString() {
 }
 
 function basicDetails(user) {
-    const { id, name, username, role_id } = user;
-    return { id, name, username, role_id };
+    const { id, name, username, role_id, customer_id } = user;
+    return { id, name, username, role_id, customer_id };
 }
 
 async function createUser(user) {
