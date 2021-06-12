@@ -13,7 +13,7 @@ function canActivate() {
 
         // authorize based on user role
         async (req, res, next) => {
-            const user = await userService.getUserById(req.user.id);
+            const user = await userService.getById(req.user.id);
             if (!user) {
                 // user no longer exists or role not authorized
                 return res.status(401).json({ message: 'Unauthorized' });

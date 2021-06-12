@@ -1,5 +1,4 @@
-const Joi = require('@hapi/joi');
-const userService = require('../../service/user.service');
+const statusService = require('../../service/status.service');
 
 module.exports = {
     getAll,
@@ -8,7 +7,7 @@ module.exports = {
 function getAll(req, res, next)
 {
     const search = req.query.search;
-    userService.getAll(search)
+    statusService.getAll(search)
         .then(response => {
             res.json({
                 totalCount: response.length,

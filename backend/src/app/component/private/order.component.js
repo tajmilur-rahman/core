@@ -18,6 +18,9 @@ async function getAll(req, res, next)
 
 async function create(req, res, next) {
     const schema = Joi.object({
+        customer_id: Joi.number().integer().required(),
+        technician_id: Joi.number().integer().optional(),
+        status_id: Joi.number().integer().required(),
         title: Joi.string().required(),
         description: Joi.string().required(),
         address: Joi.string().required(),

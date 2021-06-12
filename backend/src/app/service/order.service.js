@@ -13,6 +13,9 @@ async function getAll(params = [], isCountOnly = false) {
 
 async function create(data) {
     const insert = {
+        customer_id: data.customer_id,
+        technician_id: data.technician_id,
+        status_id: data.status_id,
         title: data.title,
         description: data.description,
         address: data.address,

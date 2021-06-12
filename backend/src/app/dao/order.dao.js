@@ -7,10 +7,11 @@ module.exports = {
 
 async function getAll(params = [], isCountOnly = false)
 {
-    const select = isCountOnly ? knex.raw('COUNT(o.id) AS totalCount') : knex.raw(`o.id, o.title, o.customer_id AS customerId, c.name AS customerName, o.address AS location, CONCAT(o.start_date, ' ', o.start_time) as schedule, o.technician_id AS technicianId, t.name AS technicianName`);
+    const select = isCountOnly ? knex.raw('COUNT(o.id) AS totalCount') : knex.raw(`o.id, o.title, o.customer_id AS customerId, c.name AS customerName, o.status_id AS statusId, s.name AS statusName, o.address AS location, CONCAT(o.start_date, ' ', o.start_time) as schedule, o.technician_id AS technicianId, t.name AS technicianName`);
     const query = knex.select(select)
         .from('orders as o')
         .leftJoin('customers AS c', 'c.id', 'o.customer_id')
+        .leftJoin('statuses AS s', 's.id', 'o.status_id')
         .leftJoin('users AS t', 't.id', 'o.technician_id')
         .orderBy('o.id', 'asc');
 

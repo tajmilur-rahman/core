@@ -25,9 +25,9 @@ export class OrderFormComponent implements OnInit {
   technicianList: ITechnician[] = [];
   payTypeList = PAY_TYPE;
   form: FormGroup = new FormGroup({
-    // customer_id: new FormControl('', [Validators.required]),
-    // status_id: new FormControl(1, [Validators.required]),
-    // technician_id: new FormControl('', [Validators.required]),
+    customer_id: new FormControl('', [Validators.required]),
+    technician_id: new FormControl(0),
+    status_id: new FormControl(1, [Validators.required]),
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
@@ -58,9 +58,17 @@ export class OrderFormComponent implements OnInit {
       this.queryParams = params;
     });
 
-    /*this.loading = true;
+    this.loading = true;
     forkJoin({
-      customerList: this.customerService.getAll(),
+      customerList: this.customerService.getAll({
+        search: [
+          {
+            field: 'status',
+            condition: 'in',
+            value: [1],
+          }
+        ],
+      }),
       statusListList: this.statusService.getAll(),
       technicianList: this.userService.getAll({
         search: [
@@ -79,7 +87,7 @@ export class OrderFormComponent implements OnInit {
       this.loading = false;
     }, () => {
       this.loading = false;
-    });*/
+    });
   }
 
   submit(): void {

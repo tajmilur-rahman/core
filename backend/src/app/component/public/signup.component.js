@@ -66,7 +66,7 @@ async function resetPassword(req, res, next) {
     const userId = +req.params.id;
 
     // search user
-    const user = await userService.getUserById(userId);
+    const user = await userService.getById(userId);
 
     if (!user) {
         next(`User not found`);

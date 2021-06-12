@@ -12,7 +12,7 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewInit, AfterContentChecked {
-  displayedColumns: string[] = ['id', 'title', 'customerName', 'location', 'schedule', 'technicianName'];
+  displayedColumns: string[] = ['id', 'title', 'customerName', 'statusName', 'location', 'schedule', 'technicianName'];
   filteredResults: Observable<IOrder[]>;
 
   totalCount = 0;

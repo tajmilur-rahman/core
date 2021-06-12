@@ -3,6 +3,7 @@ const commonService = require('./common.service');
 
 module.exports = {
     createCustomer,
+    getAll,
 };
 
 async function createCustomer(data) {
@@ -12,4 +13,14 @@ async function createCustomer(data) {
         created_at: commonService.getCurrentDate(),
     };
     return await customerDao.createCustomer(createData);
+}
+
+async function getAll(search = []) {
+    const result = await customerDao.getAll(search);
+
+    if (!result || result.length <= 0) {
+        return [];
+    }
+
+    return result;
 }

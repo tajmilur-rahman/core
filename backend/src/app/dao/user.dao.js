@@ -2,15 +2,19 @@ const knex = require('../database/knexfile').knex;
 
 module.exports = {
     getUserByUsername,
-    getAllUsers,
-    getUserById,
+    getAll,
+    getById,
     createUser,
     updateUser,
 };
 
-async function getUserById(id)
+async function getById(id)
 {
-    return await knex.select('*').from('users').where('id', id).limit(1);
+    return await knex.select('*').from('users').where({
+        'id': id,
+        'deleted_by': null,
+        'deleted_at': null,
+    }).limit(1);
 }
 
 async function getUserByUsername(username)
@@ -18,11 +22,15 @@ async function getUserByUsername(username)
     return await knex.select('*').from('users').where('username', username).limit(1);
 }
 
-async function getAllUsers(search = [])
+async function getAll(search = [])
 {
-    const query = knex.select('*').from('users');
-    search.forEach(param => {
-        query.where(param.field, param.condition, param.value);
+    const query = knex.select('*').from('users').where({
+        deleted_at: null,
+        deleted_by: null,
+    });
+
+    Object.keys(search).forEach(field => {
+        query.where(field, search[field].condition, search[field].value);
     });
     return await query;
 }

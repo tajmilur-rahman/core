@@ -4,7 +4,7 @@
       <app-loader [loading]="loading"></app-loader>
   
       <form [formGroup]="form" (submit)="submit()">
-        <!--<div class="flex space-between">
+        <div class="flex space-between">
           <div class="width-50">
             <p>
               <mat-form-field class="width-90" appearance="fill">
@@ -19,7 +19,7 @@
             <p>
               <mat-form-field class="width-90" appearance="fill">
                 <mat-label>Technician</mat-label>
-                <mat-select formControlName="technician_id" required>
+                <mat-select formControlName="technician_id">
                   <mat-option *ngFor="let technician of technicianList" [value]="technician.id">{{ technician.name }}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -38,7 +38,7 @@
               </mat-form-field>
             </p>
           </div>
-        </div>-->
+        </div>
 
         <div class="flex space-between">
           <div class="width-100">
@@ -115,7 +115,7 @@
           <div class="width-50">
             <p>
               <mat-form-field class="width-90">
-                <input type="time" matInput placeholder="Start Time" formControlName="start_time">
+                <input type="time" matInput placeholder="Start Time" formControlName="start_time" required>
               </mat-form-field>
             </p>
           </div>

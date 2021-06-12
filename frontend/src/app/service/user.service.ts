@@ -38,6 +38,6 @@ export class UserService {
       queryParams += `&offset=${+params.offset}`;
     }
 
-    return this.http.get<any>(`/v1/customers${queryParams}`);
+    return this.http.get<any>(`/v1/users${queryParams}`);
   }
 }

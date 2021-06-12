@@ -7,14 +7,14 @@ const commonService = require('./common.service');
 
 module.exports = {
     authenticate,
-    getUsers,
-    getUserById,
+    getAll,
+    getById,
     createUser,
     updateUser,
 };
 
-async function getUserById(id) {
-    const users = await userDao.getUserById(id);
+async function getById(id) {
+    const users = await userDao.getById(id);
 
     if (!users || users.length <= 0) {
         throw 'No User Found';
@@ -23,11 +23,11 @@ async function getUserById(id) {
     return users[0];
 }
 
-async function getUsers(search = []) {
-    const users = await userDao.getAllUsers(search);
+async function getAll(search = []) {
+    const users = await userDao.getAll(search);
 
     if (!users || users.length <= 0) {
-        throw 'No User Found';
+        return [];
     }
 
     return users;
