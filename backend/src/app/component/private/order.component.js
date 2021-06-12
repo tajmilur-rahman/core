@@ -1,10 +1,20 @@
 const Joi = require('@hapi/joi');
 const orderService = require('../../service/order.service');
+const countryTimezone = require('../../constant/country-timezone');
 
 module.exports = {
     getAll,
     create,
+    getCountryTimezone,
 };
+
+async function getCountryTimezone(req, res, next)
+{
+    res.json({
+        totalCount: countryTimezone.length,
+        result: countryTimezone,
+    });
+}
 
 async function getAll(req, res, next)
 {
@@ -41,6 +51,7 @@ async function create(req, res, next) {
         state: Joi.string().required(),
         zip: Joi.string().required(),
         country: Joi.string().required(),
+        timezone: Joi.string().optional().allow(null, ""),
         start_date: Joi.string().required(),
         start_time: Joi.string().required(),
         end_date: Joi.string().optional().allow(null, ""),

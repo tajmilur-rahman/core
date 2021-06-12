@@ -23,6 +23,7 @@ async function create(data) {
         state: data.state,
         zip: data.zip,
         country: data.country,
+        timezone: data.timezone,
         start_date: data.start_date,
         start_time: data.start_time,
         end_date: (data.end_date && data.end_time) ? data.end_date : null,

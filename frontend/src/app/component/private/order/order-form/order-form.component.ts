@@ -10,8 +10,10 @@ import { forkJoin } from 'rxjs';
 import { ICustomer } from '../../../../interface/ICustomer';
 import { IStatus } from '../../../../interface/IStatus';
 import { ITechnician } from '../../../../interface/ITechnician';
+import { ICountryTimezone } from '../../../../interface/ICountryTimezone';
 import { PAY_TYPE } from '../../../../constant/Order';
 import { AuthService } from '../../../../service/auth.service';
+import { CommonService } from '../../../../service/common.service';
 
 @Component({
   selector: 'app-order-form',
@@ -24,6 +26,7 @@ export class OrderFormComponent implements OnInit {
   customerList: ICustomer[] = [];
   statusList: IStatus[] = [];
   technicianList: ITechnician[] = [];
+  countryTimezoneList: ICountryTimezone[] = [];
   payTypeList = PAY_TYPE;
   sessionUser: any = null;
   form: FormGroup = new FormGroup({
@@ -37,6 +40,7 @@ export class OrderFormComponent implements OnInit {
     state: new FormControl('', [Validators.required]),
     zip: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
+    timezone: new FormControl(''),
     start_date: new FormControl('', [Validators.required]),
     start_time: new FormControl('', [Validators.required]),
     end_date: new FormControl(''),
@@ -54,6 +58,7 @@ export class OrderFormComponent implements OnInit {
     private userService: UserService,
     private orderService: OrderService,
     private authService: AuthService,
+    private commonService: CommonService,
   ) { }
 
   ngOnInit(): void {
@@ -62,8 +67,11 @@ export class OrderFormComponent implements OnInit {
       this.queryParams = params;
     });
 
+    const timeZoneOffset = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     this.loading = true;
     forkJoin({
+      countryTimezoneList: this.commonService.getCountryTimezones(),
       customerList: this.customerService.getAll({
         search: [
           {
@@ -83,17 +91,32 @@ export class OrderFormComponent implements OnInit {
           }
         ]
       }),
-    }).subscribe(({customerList, statusListList, technicianList}) => {
+    }).subscribe(({customerList, statusListList, technicianList, countryTimezoneList}) => {
       this.customerList = customerList.result;
       this.statusList = statusListList.result;
       this.technicianList = technicianList.result;
+      this.countryTimezoneList = countryTimezoneList.result;
 
       this.form.get('customer_id')?.setValue(this.sessionUser?.customer_id);
+      this.form.get('country')?.setValue(
+        (this.countryTimezoneList.filter(country => country.timezones.filter(timezone => timezone === timeZoneOffset).length > 0).length > 0) ? this.countryTimezoneList.filter(country => country.timezones.filter(timezone => timezone === timeZoneOffset).length > 0)[0].name : ''
+      );
+      this.form.get('timezone')?.setValue(timeZoneOffset);
     }, error => {
       this.loading = false;
     }, () => {
       this.loading = false;
     });
+  }
+
+  getCountryList() {
+    return this.countryTimezoneList.map(country => country.name).sort();
+  }
+
+  getTimezoneList(countryName: string = '') {
+    return (countryName && this.countryTimezoneList.filter(country => country.name === countryName).length > 0) ? this.countryTimezoneList.filter(country => country.name === countryName)[0].timezones.sort() : this.countryTimezoneList.map(country => country.timezones).reduce((totalTimezone, currentTimezone) => {
+      return totalTimezone.concat(currentTimezone);
+    }, []).sort();
   }
 
   submit(): void {

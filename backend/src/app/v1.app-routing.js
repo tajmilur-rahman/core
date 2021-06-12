@@ -17,5 +17,6 @@ router.get('/orders', canActivate(), OrderComponent.getAll);
 router.post('/orders', canActivate(), OrderComponent.create);
 router.get('/customers', canActivate(), CustomerComponent.getAll);
 router.get('/statuses', canActivate(), StatusComponent.getAll);
+router.get('/country-timezones', canActivate(), OrderComponent.getCountryTimezone);
 
 module.exports = router;

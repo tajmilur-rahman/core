@@ -98,7 +98,23 @@
           <div class="width-50">
             <p>
               <mat-form-field class="width-90">
-                <input type="text" matInput placeholder="Country" formControlName="country" required>
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="country" required>
+                  <mat-option *ngFor="let country of getCountryList()" [value]="country">{{ country }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between">
+          <div class="width-100">
+            <p>
+              <mat-form-field class="width-95-2" appearance="fill">
+                <mat-label>Timezone</mat-label>
+                <mat-select formControlName="timezone">
+                  <mat-option *ngFor="let timezone of getTimezoneList(form.get('country').value)" [value]="timezone">{{ timezone }}</mat-option>
+                </mat-select>
               </mat-form-field>
             </p>
           </div>
