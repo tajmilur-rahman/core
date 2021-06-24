@@ -5,12 +5,12 @@ module.exports = {
     create,
 };
 
-async function getAll(search = [], isCountOnly = false)
+async function getAll(search = [], isCountOnly = false, sort = null, offset = null)
 {
     const columnMap = {
         customer_id: 'o.customer_id',
     };
-    const select = isCountOnly ? knex.raw('COUNT(o.id) AS totalCount') : knex.raw(`o.id, o.title, o.customer_id AS customerId, c.name AS customerName, o.status_id AS statusId, s.name AS statusName, o.address AS location, CONCAT(o.start_date, ' ', o.start_time) as schedule, o.technician_id AS technicianId, t.name AS technicianName`);
+    const select = isCountOnly ? knex.raw('COUNT(o.id) AS totalCount') : knex.raw(`o.id, o.title, o.customer_id AS customerId, c.name AS customerName, o.status_id AS statusId, s.name AS statusName, o.address AS address, o.city AS city, o.state AS state, CONCAT(o.start_date) AS startDate, o.start_time AS startTime, CONCAT(o.start_date, ' ', o.start_time) AS startDateTime, CONCAT(o.end_date) AS endDate, o.end_time AS endTime, CONCAT(o.end_date, ' ', o.end_time) AS endDateTime, o.technician_id AS technicianId, t.name AS technicianName`);
     const query = knex.select(select)
         .from('orders as o')
         .leftJoin('customers AS c', 'c.id', 'o.customer_id')
@@ -21,6 +21,10 @@ async function getAll(search = [], isCountOnly = false)
     Object.keys(search).forEach(field => {
         query.where(columnMap[field], search[field].condition, search[field].value);
     });
+
+    if (offset) {
+        //
+    }
     return await query;
 }
 

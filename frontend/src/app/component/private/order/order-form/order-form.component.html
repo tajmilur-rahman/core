@@ -19,7 +19,8 @@
             <p>
               <mat-form-field class="width-90" appearance="fill">
                 <mat-label>Technician</mat-label>
-                <mat-select formControlName="technician_id">
+                <mat-select formControlName="technician_id" required="{{ (+form.get('status_id')?.value !== 1 && +form.get('status_id')?.value !== 2 && +form.get('status_id')?.value !== 8) ? true : false }}">
+                  <mat-option value="">Not Assigned</mat-option>
                   <mat-option *ngFor="let technician of technicianList" [value]="technician.id">{{ technician.name }}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -167,11 +168,79 @@
           </div>
         </div>
 
-        <div class="flex space-between">
+        <div class="flex space-between" *ngIf="+form.get('pay_type_id')?.value === 1">
           <div class="width-100">
             <p>
               <mat-form-field class="width-95-2">
                 <input type="number" matInput placeholder="Fixed Pay" formControlName="fixed_pay" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between" *ngIf="+form.get('pay_type_id')?.value === 2">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Per Hour" formControlName="per_hour" required>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Max Hour" formControlName="max_hour" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between" *ngIf="+form.get('pay_type_id')?.value === 3">
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Per Device" formControlName="per_device" required>
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="width-50">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Max Device" formControlName="max_device" required>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex space-between" *ngIf="+form.get('pay_type_id')?.value === 4">
+          <div class="width-25">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Pay ___ per hours/devices/units" formControlName="per_hour" required>
+              </mat-form-field>
+            </p>
+          </div>
+
+          <div class="width-25">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="upto ___ hours/devices/units" formControlName="max_hour" required>
+              </mat-form-field>
+            </p>
+          </div>
+
+          <div class="width-25">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="Then pay ___ per hours/devices/units" formControlName="per_device" required>
+              </mat-form-field>
+            </p>
+          </div>
+
+          <div class="width-25">
+            <p>
+              <mat-form-field class="width-95-2">
+                <input type="number" matInput placeholder="for next ___ hours/devices/units" formControlName="max_device" required>
               </mat-form-field>
             </p>
           </div>

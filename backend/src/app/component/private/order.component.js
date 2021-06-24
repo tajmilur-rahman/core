@@ -18,10 +18,25 @@ async function getCountryTimezone(req, res, next)
 
 async function getAll(req, res, next)
 {
-    let {search, sort, offset} = req.query;
+    let {search, sort, offset, limit} = req.query;
 
     if (!search) {
         search = {};
+    }
+
+    if (!sort) {
+        sort = {
+            active: 'o.id',
+            direction: 'asc'
+        };
+    }
+
+    if (!offset) {
+        offset = 0;
+    }
+
+    if (!limit) {
+        limit = 10;
     }
 
     if (req.user.role_id === 2) {
@@ -32,7 +47,7 @@ async function getAll(req, res, next)
     }
 
     const totalCountResult = await orderService.getAll(search, true);
-    const result = await orderService.getAll(search, false);
+    const result = await orderService.getAll(search, false, sort, offset, limit);
     res.json({
         totalCount: totalCountResult[0].totalCount,
         result: result,
@@ -42,7 +57,7 @@ async function getAll(req, res, next)
 async function create(req, res, next) {
     const schema = Joi.object({
         customer_id: Joi.number().integer().required(),
-        technician_id: Joi.number().integer().optional(),
+        technician_id: Joi.number().integer().optional().allow(null, ""),
         status_id: Joi.number().integer().required(),
         title: Joi.string().required(),
         description: Joi.string().required(),
@@ -57,7 +72,11 @@ async function create(req, res, next) {
         end_date: Joi.string().optional().allow(null, ""),
         end_time: Joi.string().optional().allow(null, ""),
         pay_type_id: Joi.number().required(),
-        fixed_pay: Joi.number().required(),
+        fixed_pay: Joi.number().optional().allow(null, ""),
+        per_hour: Joi.number().optional().allow(null, ""),
+        max_hour: Joi.number().optional().allow(null, ""),
+        per_device: Joi.number().optional().allow(null, ""),
+        max_device: Joi.number().optional().allow(null, ""),
     });
 
     const { error, value } = schema.validate(req.body);

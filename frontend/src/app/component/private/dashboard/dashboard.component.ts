@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { AuthService } from '../../../service/auth.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -67,5 +68,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentCh
 
   resetPaging(): void {
     this.paginator.pageIndex = 0;
+  }
+
+  formatSchedule(paramDateTime: string) {
+    return moment(paramDateTime).format('YYYY-MM-DD hh:mm A');
   }
 }
