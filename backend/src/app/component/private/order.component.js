@@ -26,7 +26,7 @@ async function getAll(req, res, next)
 
     if (!sort) {
         sort = {
-            active: 'o.id',
+            field: 'o.id',
             direction: 'asc'
         };
     }

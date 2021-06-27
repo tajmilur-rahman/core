@@ -5,7 +5,7 @@ module.exports = {
     create,
 };
 
-async function getAll(search = [], isCountOnly = false, sort = null, offset = null)
+async function getAll(search = [], isCountOnly = false, sort = null, offset = null, limit = null)
 {
     const columnMap = {
         customer_id: 'o.customer_id',
@@ -22,8 +22,16 @@ async function getAll(search = [], isCountOnly = false, sort = null, offset = nu
         query.where(columnMap[field], search[field].condition, search[field].value);
     });
 
-    if (offset) {
-        //
+    if (sort) {
+        query.orderBy(sort.field, sort.direction);
+    }
+
+    if (+limit > 0) {
+        query.limit(+limit);
+    }
+
+    if (+offset > 0 && +limit > 0) {
+        query.offset(+offset * +limit);
     }
     return await query;
 }

@@ -7,7 +7,7 @@ module.exports = {
 };
 
 async function getAll(params = [], isCountOnly = false, sort = null, offset = null, limit = null) {
-    const results = await orderDao.getAll(params, isCountOnly, sort, offset);
+    const results = await orderDao.getAll(params, isCountOnly, sort, offset, limit);
     return results;
 }
 
