@@ -3,14 +3,16 @@ const knex = require('../database/knexfile').knex;
 module.exports = {
     getAll,
     create,
+    update,
 };
 
 async function getAll(search = [], isCountOnly = false, sort = null, offset = null, limit = null)
 {
     const columnMap = {
         customer_id: 'o.customer_id',
+        id: 'o.id',
     };
-    const select = isCountOnly ? knex.raw('COUNT(o.id) AS totalCount') : knex.raw(`o.id, o.title, o.customer_id AS customerId, c.name AS customerName, o.status_id AS statusId, s.name AS statusName, o.address AS address, o.city AS city, o.state AS state, CONCAT(o.start_date) AS startDate, o.start_time AS startTime, CONCAT(o.start_date, ' ', o.start_time) AS startDateTime, CONCAT(o.end_date) AS endDate, o.end_time AS endTime, CONCAT(o.end_date, ' ', o.end_time) AS endDateTime, o.technician_id AS technicianId, t.name AS technicianName`);
+    const select = isCountOnly ? knex.raw('COUNT(o.id) AS totalCount') : knex.raw(`o.id, o.title, o.description, o.customer_id AS customerId, c.name AS customerName, o.status_id AS statusId, s.name AS statusName, o.address AS address, o.city AS city, o.state AS state, o.zip, o.country, CONCAT(o.start_date) AS startDate, o.start_time AS startTime, CONCAT(o.start_date, ' ', o.start_time) AS startDateTime, CONCAT(o.end_date) AS endDate, o.end_time AS endTime, CONCAT(o.end_date, ' ', o.end_time) AS endDateTime, o.technician_id AS technicianId, o.timezone, t.name AS technicianName, o.pay_type_id AS payTypeId, o.fixed_pay AS fixedPay, o.per_hour AS perHour, o.max_hour AS maxHour, o.per_device AS perDevice, o.max_device AS maxDevice`);
     const query = knex.select(select)
         .from('orders as o')
         .leftJoin('customers AS c', 'c.id', 'o.customer_id')
@@ -40,6 +42,14 @@ async function create(params)
 {
     const query = knex('orders').insert(params, 'id').then(result => {
         return result[0];
+    });
+    return await query;
+}
+
+async function update(params, id)
+{
+    const query = knex('orders').update(params).where('id', id).then(result => {
+        return id;
     });
     return await query;
 }

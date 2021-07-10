@@ -11,32 +11,11 @@ async function getAll(params = [], isCountOnly = false, sort = null, offset = nu
     return results;
 }
 
-async function create(data) {
-    const insert = {
-        customer_id: +data.customer_id,
-        technician_id: (+data.technician_id > 0) ? +data.technician_id : null,
-        status_id: +data.status_id,
-        title: data.title,
-        description: data.description,
-        address: data.address,
-        city: data.city,
-        state: data.state,
-        zip: data.zip,
-        country: data.country,
-        timezone: data.timezone,
-        start_date: data.start_date,
-        start_time: data.start_time,
-        end_date: (data.end_date && data.end_time) ? data.end_date : null,
-        end_time: (data.end_date && data.end_time) ? data.end_time : null,
-        pay_type_id: +data.pay_type_id,
-        fixed_pay: +data.fixed_pay,
-        per_hour: +data.per_hour,
-        max_hour: +data.max_hour,
-        per_device: +data.per_device,
-        max_device: +data.max_device,
-        created_by: +data.created_by,
-        created_at: commonService.getCurrentDate(),
-    };
+async function create(data, id = 0) {
+    const insert = data;
+    insert.technician_id = (+data.technician_id > 0) ? +data.technician_id : null;
+    insert.end_date = (data.end_date && data.end_time) ? data.end_date : null;
+    insert.end_time = (data.end_date && data.end_time) ? data.end_time : null;
 
     if (+insert.pay_type_id > 0) {
         if (+insert.pay_type_id === 1) {
@@ -63,5 +42,5 @@ async function create(data) {
         }
     }
 
-    return await orderDao.create(insert);
+    return await ((+id > 0) ? orderDao.update(insert, id) : orderDao.create(insert));
 }

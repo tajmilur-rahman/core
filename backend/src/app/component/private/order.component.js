@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi');
 const orderService = require('../../service/order.service');
+const commonService = require('../../service/common.service');
 const countryTimezone = require('../../constant/country-timezone');
 
 module.exports = {
@@ -56,6 +57,7 @@ async function getAll(req, res, next)
 
 async function create(req, res, next) {
     const schema = Joi.object({
+        id: Joi.number().integer().optional().allow(null, "", 0),
         customer_id: Joi.number().integer().required(),
         technician_id: Joi.number().integer().optional().allow(null, ""),
         status_id: Joi.number().integer().required(),
@@ -89,12 +91,24 @@ async function create(req, res, next) {
         value.customer_id = req.user.customer_id;
     }
 
-    value.created_by = req.user.id;
-    const id = await orderService.create(value);
+    let id = (+value.id > 0) ? +value.id : 0;
+    delete value['id'];
+    let message = ``;
+    if (id > 0) {
+        value.updated_by = req.user.id;
+        value.updated_at = commonService.getCurrentDate();
+        id = await orderService.create(value, id);
+        message = `Order updated successfully`;
+    } else {
+        value.created_by = req.user.id;
+        value.created_at = commonService.getCurrentDate();
+        id = await orderService.create(value);
+        message = `Order created successfully`;
+    }
 
     res.json({
         success: true,
-        message: 'Order created successfully',
+        message: message,
         data: id,
     });
 }

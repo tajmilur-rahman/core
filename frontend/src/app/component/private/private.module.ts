@@ -20,14 +20,19 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { OrderFormComponent } from './order/order-form/order-form.component';
+import { OrderViewComponent } from './order/order-view/order-view.component';
+import { OrderListComponent } from './order/order-list/order-list.component';
 
 @NgModule({
   declarations: [
     PrivateComponent,
     DashboardComponent,
     OrderFormComponent,
+    OrderViewComponent,
+    OrderListComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +54,7 @@ import { OrderFormComponent } from './order/order-form/order-form.component';
     MatStepperModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatTabsModule,
   ],
   exports: [
     MatCardModule,
@@ -66,6 +72,7 @@ import { OrderFormComponent } from './order/order-form/order-form.component';
     MatStepperModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatTabsModule,
   ]
 })
 export class PrivateModule { }

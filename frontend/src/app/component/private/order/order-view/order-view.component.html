@@ -1,0 +1,126 @@
+<div class="p-5 flex">
+    <div>
+        <a mat-raised-button routerLink="/private/order">&lt;&lt;&nbsp;Return to Order list</a>
+    </div>
+    <div class="ml-5">
+        <a mat-raised-button routerLink="/private/order/form/{{ order?.id }}" color="primary">Edit</a>
+    </div>
+</div>
+<div class="mt-5">
+    <mat-tab-group>
+        <mat-tab label="Order Details">
+            <div class="p-5">
+                <div class="width-100 flex">
+                    <div class="width-50">
+                        <mat-card>
+                            <mat-card-title>Order Details</mat-card-title>
+                            <mat-card-content>
+                                <div class="width-100 flex mt-5">
+                                    <div class="width-50">
+                                        Customer
+                                    </div>
+                                    <div class="width-50">
+                                        <a routerLink="/private/customer/{{ order?.customerId }}">{{ order?.customerName }}</a>
+                                    </div>
+                                </div>
+                                <div class="width-100 flex mt-5">
+                                    <div class="width-50">
+                                        Status
+                                    </div>
+                                    <div class="width-50">
+                                        {{ order?.statusName }}
+                                    </div>
+                                </div>
+                                <div class="width-100 flex mt-5">
+                                    <div class="width-50">
+                                        Technician
+                                    </div>
+                                    <div class="width-50">
+                                        <a routerLink="/private/technician/{{ order?.technicianId }}">{{ order?.technicianName }}</a>
+                                    </div>
+                                </div>
+                                <div class="width-100 flex mt-5">
+                                    <div class="width-50">
+                                        Title
+                                    </div>
+                                    <div class="width-50">
+                                        {{ order?.title }}
+                                    </div>
+                                </div>
+                                <div class="width-100 flex mt-5">
+                                    <div class="width-50">
+                                        Description
+                                    </div>
+                                    <div class="width-50">
+                                        {{ order?.description }}
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="width-50 pl-5">
+                        <mat-card>
+                            <mat-card-title>Location</mat-card-title>
+                            <mat-card-content>
+                                <div class="width-100 mt-5">
+                                    <div class="width-100">
+                                        {{ order?.address }}
+                                    </div>
+                                    <div class="width-100">
+                                        {{ order?.city }}, {{ order?.state }} - {{ order?.zip }}
+                                    </div>
+                                    <div class="width-100">
+                                        {{ order?.country }}
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+                <div class="width-100 flex mt-5">
+                    <div class="width-50">
+                        <mat-card>
+                            <mat-card-title>Pay</mat-card-title>
+                            <mat-card-content>
+                                <div class="width-100 mt-5">
+                                    <div class="width-100" *ngIf="+order?.payTypeId === 1">
+                                        Fixed {{ order.fixedPay }}
+                                    </div>
+                                    <div class="width-100" *ngIf="+order?.payTypeId === 2">
+                                        {{ order.perHour }} per hour upto maximum {{ order.maxHour }} hour(s)
+                                    </div>
+                                    <div class="width-100" *ngIf="+order?.payTypeId === 3">
+                                        {{ order.perDevice }} per device upto maximum {{ order.maxDevice }} device(s)
+                                    </div>
+                                    <div class="width-100" *ngIf="+order?.payTypeId === 4">
+                                        <div class="mt-5">
+                                            Pay {{ order.perHour }} per hour/device/unit upto {{ order.maxHour }} hour/device/unit(s).
+                                        </div>
+                                        <div class="mt-5">
+                                            Then pay {{ order.perDevice }} per hour/device/unit for next {{ order.maxDevice }} hour/device/unit(s)
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                    <div class="width-50 pl-5">
+                        <mat-card>
+                            <mat-card-title>Schedule</mat-card-title>
+                            <mat-card-content>
+                                <div class="width-100 mt-5">
+                                    <div class="width-100">
+                                        Scheduled to start from {{ order?.startDateTime }} {{ order?.endDateTime ? 'to' : '' }} {{ order?.endDateTime }} {{ order?.timezone }}
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Requestors"></mat-tab>
+    </mat-tab-group>
+</div>
