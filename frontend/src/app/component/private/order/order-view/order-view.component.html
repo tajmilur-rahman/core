@@ -1,9 +1,39 @@
+<app-loader [loading]="loading"></app-loader>
 <div class="p-5 flex">
     <div>
         <a mat-raised-button routerLink="/private/order">&lt;&lt;&nbsp;Return to Order list</a>
     </div>
-    <div class="ml-5">
-        <a mat-raised-button routerLink="/private/order/form/{{ order?.id }}" color="primary">Edit</a>
+    <div class="flex" *ngIf="+order?.statusId !== 8">
+        <div class="ml-5" *ngIf="+sessionUser.role_id === 1 || +sessionUser.role_id === 2">
+            <a mat-raised-button routerLink="/private/order/form/{{ order?.id }}" color="primary">Edit</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 1 || +sessionUser.role_id === 2) && +order?.statusId === 1">
+            <a mat-raised-button (click)="changeStatus(2)" color="primary">Publish</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 1 || +sessionUser.role_id === 2) && (+order?.statusId === 2 || +order?.statusId === 3)">
+            <a mat-raised-button (click)="changeStatus(1)" color="primary">Un-publish</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 3) && +order?.statusId === 2 && +order?.orderRequestId === 0">
+            <a mat-raised-button (click)="request('request')" color="primary">Request</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 3) && +order?.statusId === 2 && +order?.orderRequestId > 0">
+            <a mat-raised-button (click)="request('cancel')" color="primary">Cancel Request</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 3) && +order?.statusId === 3">
+            <a mat-raised-button (click)="changeStatus(3)" color="primary">Accept</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 3) && +order?.statusId === 4">
+            <a mat-raised-button (click)="changeStatus(5)" color="primary">Mark In Review</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 1 || +sessionUser.role_id === 2) && +order?.statusId === 5">
+            <a mat-raised-button (click)="changeStatus(6)" color="primary">Mark Complete</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 1) && +order?.statusId === 6">
+            <a mat-raised-button (click)="changeStatus(7)" color="primary">Mark Paid</a>
+        </div>
+        <div class="ml-5" *ngIf="(+sessionUser.role_id === 1 || +sessionUser.role_id === 2)">
+            <a mat-raised-button (click)="changeStatus(8)" color="warn">Cancel</a>
+        </div>
     </div>
 </div>
 <div class="mt-5">
@@ -31,7 +61,7 @@
                                         {{ order?.statusName }}
                                     </div>
                                 </div>
-                                <div class="width-100 flex mt-5">
+                                <div class="width-100 flex mt-5" *ngIf="+order?.technicianId > 0">
                                     <div class="width-50">
                                         Technician
                                     </div>
@@ -112,7 +142,7 @@
                             <mat-card-content>
                                 <div class="width-100 mt-5">
                                     <div class="width-100">
-                                        Scheduled to start from {{ order?.startDateTime }} {{ order?.endDateTime ? 'to' : '' }} {{ order?.endDateTime }} {{ order?.timezone }}
+                                        Scheduled to start from {{ formatSchedule(order?.startDateTime) }} {{ order?.endDateTime ? 'to' : '' }} {{ order?.endDateTime ? formatSchedule(order?.endDateTime) : '' }} {{ order?.timezone }}
                                     </div>
                                 </div>
                             </mat-card-content>
@@ -121,6 +151,10 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="Requestors"></mat-tab>
+        <mat-tab label="Requestors" *ngIf="(+sessionUser.role_id === 1 || +sessionUser.role_id === 2) && +order?.statusId === 2">
+            <div class="p-5">
+                <app-order-requests [id]="id" (isReloadOrder)="shouldReloadOrder($event)"></app-order-requests>
+            </div>
+        </mat-tab>
     </mat-tab-group>
 </div>

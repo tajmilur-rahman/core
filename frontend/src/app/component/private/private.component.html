@@ -6,23 +6,23 @@
         <div class="menu-link-container">
             <div class="menu-link">
                 <mat-icon aria-hidden="false" aria-label="Dashboard">dashboard</mat-icon>
-                <a class="link" routerLink="/private/dashboard">Dashboard</a>
+                <a class="link" (click)="hideSideNav()" routerLink="/private/dashboard">Dashboard</a>
             </div>
             <div class="menu-link">
                 <mat-icon aria-hidden="false" aria-label="Orders">list</mat-icon>
-                <a class="link" routerLink="/private/order">Orders</a>
+                <a class="link" (click)="hideSideNav()" routerLink="/private/order">Orders</a>
             </div>
             <div class="menu-link" *ngIf="sessionUser?.role_id === 1">
                 <mat-icon aria-hidden="false" aria-label="Customers">account_circle</mat-icon>
-                <a class="link" routerLink="/private/customer">Customers</a>
+                <a class="link" (click)="hideSideNav()" routerLink="/private/customer">Customers</a>
             </div>
             <div class="menu-link" *ngIf="sessionUser?.role_id === 1">
                 <mat-icon aria-hidden="false" aria-label="Technicians">account_box</mat-icon>
-                <a class="link" routerLink="/private/technician">Technicians</a>
+                <a class="link" (click)="hideSideNav()" routerLink="/private/technician">Technicians</a>
             </div>
             <div class="menu-link" *ngIf="sessionUser?.role_id === 1">
                 <mat-icon aria-hidden="false" aria-label="Users">supervisor_account</mat-icon>
-                <a class="link" routerLink="/private/user">Users</a>
+                <a class="link" (click)="hideSideNav()" routerLink="/private/user">Users</a>
             </div>
         </div>
     </mat-sidenav>

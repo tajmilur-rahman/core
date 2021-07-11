@@ -4,11 +4,34 @@ const commonService = require('./common.service');
 module.exports = {
     getAll,
     create,
+    createRequest,
+    deleteRequest,
+    deleteRequestByOrderId,
+    getAllRequest,
 };
 
 async function getAll(params = [], isCountOnly = false, sort = null, offset = null, limit = null) {
     const results = await orderDao.getAll(params, isCountOnly, sort, offset, limit);
     return results;
+}
+
+async function getAllRequest(params = [], isCountOnly = false, sort = null, offset = null, limit = null) {
+    const results = await orderDao.getAllRequest(params, isCountOnly, sort, offset, limit);
+    return results;
+}
+
+async function createRequest(data) {
+    delete data['flag'];
+    return await orderDao.createRequest(data);
+}
+
+async function deleteRequest(data) {
+    delete data['flag'];
+    return await orderDao.deleteRequest(data);
+}
+
+async function deleteRequestByOrderId(data) {
+    return await orderDao.deleteRequestByOrderId(data);
 }
 
 async function create(data, id = 0) {

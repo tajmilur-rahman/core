@@ -6,7 +6,7 @@
         {{ (id > 0) ? 'Edit' : 'Create' }} order
       </div>
       <div class="top-return-btn">
-        <a mat-raised-button routerLink="/private/order">Return to Order list</a>
+        <a mat-raised-button routerLink="/private/order{{ (id > 0) ? '/'+id : '' }}">Return to Order {{ (id > 0) ? 'Details' : 'List' }}</a>
       </div>
     </div>
     <div class="margin-top-20">
@@ -254,7 +254,7 @@
         </div>
   
         <div class="button">
-          <button type="submit" [disabled]="!form.valid" mat-button>{{ (id > 0) ? 'Edit' : 'Create' }}</button>
+          <button type="submit" [disabled]="!form.valid" mat-raised-button color="primary">{{ (id > 0) ? 'Edit' : 'Create' }}</button>
         </div>
       </form>
     </div>

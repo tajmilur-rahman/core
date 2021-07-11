@@ -24,4 +24,8 @@ export class PrivateComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  hideSideNav() {
+    this.opened = false;
+  }
+
 }

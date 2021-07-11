@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CustomerService } from '../../../../service/customer.service';
-import { StatusService } from '../../../../service/status.service';
 import { OrderService } from '../../../../service/order.service';
-import { UserService } from '../../../../service/user.service';
 import { AuthService } from '../../../../service/auth.service';
-import { CommonService } from '../../../../service/common.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-order-view',
@@ -23,6 +20,7 @@ export class OrderViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
     private orderService: OrderService,
     private authService: AuthService,
   ) {}
@@ -37,6 +35,7 @@ export class OrderViewComponent implements OnInit {
   }
 
   loadOrder() {
+    this.loading = true;
     this.orderService.getAll({
       search: [{
         field: 'id',
@@ -45,6 +44,64 @@ export class OrderViewComponent implements OnInit {
       }]
     }).subscribe(response => {
       this.order = response.result[0];
+    }, error => {
+      this.loading = false;
+    }, () => {
+      this.loading = false;
     });
+  }
+
+  changeStatus(statusId: number) {
+    this.loading = true;
+    this.orderService.changeStatus({
+      id: +this.id,
+      status_id: +statusId,
+    }).subscribe(response => {
+      this.snackBar.open(response.message.toString(), '', {
+        duration: 5000,
+        panelClass: ['success']
+      });
+      this.loadOrder();
+    }, error => {
+      this.loading = false;
+      this.snackBar.open(error.error.message, '', {
+        duration: 1000,
+        panelClass: ['error']
+      });
+    }, () => {
+      this.loading = false;
+    });
+  }
+
+  request(flag = 'request') {
+    this.loading = true;
+    this.orderService.requestOrder({
+      order_id: +this.id,
+      flag: flag,
+    }).subscribe(response => {
+      this.snackBar.open(response.message.toString(), '', {
+        duration: 5000,
+        panelClass: ['success']
+      });
+      this.loadOrder();
+    }, error => {
+      this.loading = false;
+      this.snackBar.open(error.error.message, '', {
+        duration: 1000,
+        panelClass: ['error']
+      });
+    }, () => {
+      this.loading = false;
+    });
+  }
+
+  formatSchedule(paramDateTime: string) {
+    return moment(paramDateTime).format('MM/DD/YYYY hh:mm A');
+  }
+
+  shouldReloadOrder(event: boolean) {
+    if (event) {
+      this.loadOrder();
+    }
   }
 }
